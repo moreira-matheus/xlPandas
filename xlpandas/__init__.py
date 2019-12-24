@@ -4,7 +4,7 @@ Preserves workbook formatting and structure by only accessing data in rows using
 
 Example
 ```
-import xlPandas as xpd
+import xlpandas as xpd
 
 # Read excel file
 df = xpd.read_file('template.xlsx', skiprows=2)
@@ -12,7 +12,7 @@ print(df.columns)
 
 # Access openpyxl worksheet
 sheet = df.to_sheet()
-sheet.cell(1,1) = 'title'
+sheet.cell(1,1).value = 'title'
 
 # From openpyxl worksheet
 df = xpd.xlDataFrame(sheet)

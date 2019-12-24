@@ -18,7 +18,7 @@ while preserving template formatting, macros, and other worksheet attributes.
 
 ``` python
 
-import xlPandas as xpd
+import xlpandas as xpd
 
 # Read excel file
 df = xpd.read_file('template.xlsx', skiprows=2)
@@ -29,7 +29,7 @@ df['new_column'] = True
 
 # Access openpyxl worksheet
 sheet = df.to_sheet()
-sheet.cell(1,1) = 'title'
+sheet.cell(1,1).value = 'title'
 
 # From openpyxl worksheet
 df = xpd.xlDataFrame(sheet)
