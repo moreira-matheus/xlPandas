@@ -95,7 +95,7 @@ class xlDataFrame(pd.DataFrame):
                 value = col.iloc[r]
                 if pd.isna(value):
                     value = None
-                worksheet.cell(skiprows+r+1, c+1, value)
+                worksheet.cell(skiprows+r+1, c+1).value = value
 
         excessrows = worksheet.max_row - skiprows - h
         excesscols = worksheet.max_column - w
