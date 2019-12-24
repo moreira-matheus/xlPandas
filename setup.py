@@ -14,5 +14,10 @@ setup(
     author='Francis Gassert',
     url='https://github.com/fgassert/xlpandas',
     packages=['xlpandas'],
-    install_requires=['openpyxl','pandas']
+    install_requires=['openpyxl','pandas'],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
 )

@@ -66,6 +66,22 @@ class xlDataFrame(pd.DataFrame):
     def _constructor(self):
         return xlDataFrame
 
+    # From geopandas
+    def __finalize__(self, other, method=None, **kwargs):
+        """propagate metadata from other to self """
+        # merge operation: using metadata of the left object
+        if method == "merge":
+            for name in self._metadata:
+                object.__setattr__(self, name, getattr(other.left, name, None))
+        # concat operation: using metadata of the first object
+        elif method == "concat":
+            for name in self._metadata:
+                object.__setattr__(self, name, getattr(other.objs[0], name, None))
+        else:
+            for name in self._metadata:
+                object.__setattr__(self, name, getattr(other, name, None))
+        return self
+
     def _commit(self, worksheet=None):
         '''Sync DataFrame to worksheet. Excess rows and columns deleted'''
         worksheet = worksheet or self._worksheet
@@ -76,7 +92,7 @@ class xlDataFrame(pd.DataFrame):
             worksheet.cell(skiprows, c+1, self.columns[c])
             col = self[self.columns[c]]
             for r in range(h):
-                value = col[r]
+                value = col.iloc[r]
                 if pd.isna(value):
                     value = None
                 worksheet.cell(skiprows+r+1, c+1, value)
