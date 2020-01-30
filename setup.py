@@ -6,7 +6,7 @@ with open('README.md') as f:
 
 setup(
     name='xlpandas',
-    version='0.1.2',
+    version='0.1.3',
     description='Read and write xlsx/xlst using pandas/openpyxl while preserving Excel formatting',
     long_description=ld,
     long_description_content_type="text/markdown",

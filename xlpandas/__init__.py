@@ -54,11 +54,11 @@ class xlDataFrame(pd.DataFrame):
                 self.__getattr__('_worksheet')
             except:
                 workbook = openpyxl.Workbook()
-                self._worksheet = workbook.create_sheet('Sheet 1')
+                self._worksheet = workbook.active
         else:
             self._worksheet = worksheet
             values = [r for r in worksheet.values]
-            if kwargs.get('columns') is None:
+            if kwargs.get('columns') is None and len(values):
                 kwargs['columns'] = values[self._skiprows-1]
             super().__init__(values[self._skiprows:], *args, **kwargs)
 
