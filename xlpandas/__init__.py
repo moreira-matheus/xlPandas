@@ -86,19 +86,20 @@ class xlDataFrame(pd.DataFrame):
         '''Sync DataFrame to worksheet. Excess rows and columns deleted'''
         worksheet = worksheet or self._worksheet
         skiprows = self._skiprows
-        h, w = self.shape
+        num_rows, num_cols = self.shape
 
-        for c in range(w):
-            worksheet.cell(skiprows, c+1, self.columns[c])
-            col = self[self.columns[c]]
-            for r in range(h):
-                value = col.iloc[r]
+        for idx_col, col_name in enumerate(self.columns):
+            worksheet.cell(skiprows, idx_col+1, col_name)
+
+            for idx_row in range(num_rows):
+                value = self.iloc[idx_row, idx_col]
                 if pd.isna(value):
                     value = None
-                worksheet.cell(skiprows+r+1, c+1).value = value
 
-        excessrows = worksheet.max_row - skiprows - h
-        excesscols = worksheet.max_column - w
+                worksheet.cell(skiprows + idx_row+1, idx_col+1).value = value
+
+        excessrows = worksheet.max_row - skiprows - num_rows
+        excesscols = worksheet.max_column - num_cols
         if excessrows:
             worksheet.delete_rows(worksheet.max_row - excessrows + 1, excessrows)
         if excesscols:
